@@ -1,0 +1,43 @@
+management:
+    endpoints:
+        enabled-by-default: true
+        web:
+            exposure:
+                include: "*"
+
+resilience4j:
+    circuitbreaker:
+        instances:
+            concourseService:
+                registerHealthIndicator: true
+            vaultService:
+                registerHealthIndicator: true
+
+
+spring:
+    application:
+        name: vault-gateway
+    cloud:
+        gateway:
+            routes:
+                - id: concourse
+                  uri: http://concourse-web.concourse.svc.cluster.local:8080
+                  predicates:
+                      - Host=concourse.apps-127-0-0-1.nip.io
+                  filters:
+                      - name: CircuitBreaker
+                        args:
+                            name: concourseService
+                            fallbackUri: forward:/concourse-fallback
+                - id: vault
+                  uri: http://vault.vault.svc.cluster.local:8200
+                  predicates:
+                      - Host=vault.apps-127-0-0-1.nip.io
+                  filters:
+                      - name: CircuitBreaker
+                        args:
+                            name: vaultService
+                            fallbackUri: forward:/vault-fallback
+    threads:
+        virtual:
+            enabled: true
