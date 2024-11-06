@@ -5,3 +5,4 @@ applications:
     routes:
       - route: vault.apps-127-0-0-1.nip.io
       - route: concourse.apps-127-0-0-1.nip.io
+      - route: ollama.apps-127-0-0-1.nip.io

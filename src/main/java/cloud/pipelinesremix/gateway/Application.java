@@ -20,13 +20,19 @@ public class Application {
 @ResponseBody
 class FallbackController {
 
+	@RequestMapping("/concourse-fallback")
+	public Mono<String> concourse() {
+		return Mono.just("Unable to connect to Concourse");
+	}
+
+	@RequestMapping("/ollama-fallback")
+	public Mono<String> ollama() {
+		return Mono.just("Unable to connect to Ollama");
+	}
+
 	@RequestMapping("/vault-fallback")
 	public Mono<String> vault() {
 		return Mono.just("Unable to connect to Vault");
 	}
 
-	@RequestMapping("/concourse-fallback")
-	public Mono<String> concourse() {
-		return Mono.just("Unable to connect to Concourse");
-	}
 }

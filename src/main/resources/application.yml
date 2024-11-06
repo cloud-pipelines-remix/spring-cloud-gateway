@@ -13,7 +13,6 @@ resilience4j:
             vaultService:
                 registerHealthIndicator: true
 
-
 spring:
     application:
         name: vault-gateway
@@ -29,6 +28,15 @@ spring:
                         args:
                             name: concourseService
                             fallbackUri: forward:/concourse-fallback
+                - id: ollama
+                  uri: http://ollama.ollama.svc.cluster.local:11434
+                  predicates:
+                    - Host=ollama.apps-127-0-0-1.nip.io
+                  filters:
+                    - name: CircuitBreaker
+                      args:
+                        name: ollamaService
+                        fallbackUri: forward:/ollama-fallback
                 - id: vault
                   uri: http://vault.vault.svc.cluster.local:8200
                   predicates:
