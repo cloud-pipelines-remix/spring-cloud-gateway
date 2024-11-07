@@ -10,6 +10,8 @@ resilience4j:
         instances:
             concourseService:
                 registerHealthIndicator: true
+            ollamaService:
+                registerHealthIndicator: true
             vaultService:
                 registerHealthIndicator: true
 
