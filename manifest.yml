@@ -3,6 +3,7 @@ applications:
   - name: remix-gateway
     instances: 1
     routes:
-      - route: vault.apps-127-0-0-1.nip.io
+      - route: cf-api.apps-127-0-0-1.nip.io
       - route: concourse.apps-127-0-0-1.nip.io
       - route: ollama.apps-127-0-0-1.nip.io
+      - route: vault.apps-127-0-0-1.nip.io

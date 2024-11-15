@@ -8,6 +8,8 @@ management:
 resilience4j:
     circuitbreaker:
         instances:
+            cfApi:
+                registerHealthIndicator: true
             concourseService:
                 registerHealthIndicator: true
             ollamaService:
@@ -21,6 +23,15 @@ spring:
     cloud:
         gateway:
             routes:
+                - id: cf-api
+                  uri: http://korifi-api-svc.korifi.svc.cluster.local:443
+                  predicates:
+                    - Host=cf-api.apps-127-0-0-1.nip.io
+                  filters:
+                    - name: CircuitBreaker
+                      args:
+                        name: cfApi
+                        fallbackUri: forward:/cfApi-fallback
                 - id: concourse
                   uri: http://concourse-web.concourse.svc.cluster.local:8080
                   predicates:

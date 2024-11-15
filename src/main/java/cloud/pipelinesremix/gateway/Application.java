@@ -20,6 +20,11 @@ public class Application {
 @ResponseBody
 class FallbackController {
 
+	@RequestMapping("/cfApi-fallback")
+	public Mono<String> cfApi() {
+		return Mono.just("Unable to connect to cfApi");
+	}
+
 	@RequestMapping("/concourse-fallback")
 	public Mono<String> concourse() {
 		return Mono.just("Unable to connect to Concourse");
