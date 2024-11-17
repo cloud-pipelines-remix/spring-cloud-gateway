@@ -19,12 +19,15 @@ resilience4j:
 
 spring:
     application:
-        name: vault-gateway
+        name: remix-gateway
     cloud:
         gateway:
+            httpclient:
+              ssl:
+                useInsecureTrustManager: true
             routes:
                 - id: cf-api
-                  uri: http://korifi-api-svc.korifi.svc.cluster.local:443
+                  uri: https://korifi-api-svc.korifi.svc.cluster.local:443
                   predicates:
                     - Host=cf-api.apps-127-0-0-1.nip.io
                   filters:
